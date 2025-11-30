@@ -35,7 +35,7 @@ public abstract class Tetromino extends GameObject implements Rotatable {
         g.setColor(color);
         for (Point p : blocks) {
             int drawX = originX + (x + p.x) * cellW;
-            int drawY = originY + (y - p.y) * cellH;
+            int drawY = originY + (y + p.y) * cellH;
 
             g.fillRect(drawX + 1, drawY + 1, cellW - 2, cellH - 2);
 

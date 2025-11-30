@@ -127,20 +127,13 @@ public class Board extends JPanel {
     private boolean canPlace(Tetromino piece, int px, int py) {
         for (Point p : piece.getBlocks()) {
             int tileX = px + p.x;
-            int tileY = py - p.y;  // INI SANGAT PENTING: Tetromino y positif ke atas
+            int tileY = py + p.y;  // INI SANGAT PENTING: Tetromino y positif ke atas
 
             // batas papan
-            if (tileX < 0 || tileX >= BoardWidth) {
-                return false;
-            }
-            if (tileY < 0 || tileY >= BoardHeight) {
-                return false;
-            }
+            if (tileX < 0 || tileX >= BoardWidth) return false;
+            if (tileY < 0 || tileY >= BoardHeight) return false;
 
-            // konversi tileY ke indeks grid
-            int gridY = BoardHeight - 1 - tileY;
-
-            if (grid[gridY][tileX] != null) {
+            if (grid[tileY][tileX] != null) {
                 return false;
             }
         }
@@ -200,9 +193,7 @@ public class Board extends JPanel {
             int gx = curX + p.x;
             int gy = curY + p.y;
             if (gy >= 0 && gy < BoardHeight && gx >= 0 && gx < BoardWidth) {
-                int tileY = gy;
-                int gridY = BoardHeight - 1 - tileY;
-                grid[gridY][gx] = currentPiece.getColor();
+                grid[gy][gx] = currentPiece.getColor();
             }
         }
         clearFullLines();
@@ -211,7 +202,10 @@ public class Board extends JPanel {
 
     private void clearFullLines() {
         int lines = 0;
-        for (int r = 0; r < BoardHeight; r++) {
+
+        // scan dari BAWAH ke ATAS (y banyak ke y kecil)
+        for (int r = BoardHeight - 1; r >= 0; r--) {
+
             boolean full = true;
             for (int c = 0; c < BoardWidth; c++) {
                 if (grid[r][c] == null) {
@@ -219,24 +213,33 @@ public class Board extends JPanel {
                     break;
                 }
             }
+
             if (full) {
                 lines++;
-                for (int rr = r; rr < BoardHeight - 1; rr++) {
+
+                // geser semua baris di atas turun 1
+                for (int rr = r; rr > 0; rr--) {
                     for (int cc = 0; cc < BoardWidth; cc++) {
-                        grid[rr][cc] = grid[rr + 1][cc];
+                        grid[rr][cc] = grid[rr - 1][cc];
                     }
                 }
+
+                // kosongkan baris paling atas
                 for (int cc = 0; cc < BoardWidth; cc++) {
-                    grid[BoardHeight - 1][cc] = null;
+                    grid[0][cc] = null;
                 }
-                r--;
+
+                // cek kembali baris yang sama setelah shift
+                r++;
             }
         }
+
         if (lines > 0) {
             score += lines * 100;
             dropIntervalMs = Math.max(100, dropIntervalMs - lines * 10);
         }
     }
+
 
     private void gameOver() {
         isGameOver = true;
