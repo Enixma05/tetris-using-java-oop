@@ -4,7 +4,6 @@ import javax.swing.*;
 public class TetrisFrame extends JFrame {
 
     public static String currentNickname = "";
-
     private CardLayout layout;
     private JPanel container;
 
@@ -14,8 +13,9 @@ public class TetrisFrame extends JFrame {
     private LeaderboardPanel leaderboardPanel;
 
     public TetrisFrame() {
+
         setTitle("Tetris Game");
-        setSize(350, 500);
+        setSize(380, 550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -23,6 +23,7 @@ public class TetrisFrame extends JFrame {
 
         layout = new CardLayout();
         container = new JPanel(layout);
+        container.setOpaque(false);
 
         nicknamePanel = new NicknamePanel(this);
         menuPanel = new MainMenuPanel(this);
@@ -32,7 +33,21 @@ public class TetrisFrame extends JFrame {
         container.add(menuPanel, "menu");
         container.add(leaderboardPanel, "leaderboard");
 
-        add(container);
+        setContentPane(new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(
+                    0, 0, new Color(50, 37, 76),
+                    0, getHeight(), new Color(155, 130, 188)
+                );
+                g2.setPaint(gp);
+                g2.fillRect(0, 0, getWidth(), getHeight());
+            }
+        });
+
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(container, BorderLayout.CENTER);
 
         showPanel("nick");
     }
@@ -50,7 +65,6 @@ public class TetrisFrame extends JFrame {
         showPanel("game");
         boardPanel.start();
     }
-
 
     public void showLeaderboard() {
         leaderboardPanel.loadLeaderboard();
