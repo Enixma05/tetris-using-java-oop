@@ -18,8 +18,8 @@ public class KoneksiDatabase {
             System.out.println("Database connected!");
 
             String sql1 =
-                "CREATE TABLE IF NOT EXISTS scores (" +
-                "score_id INT AUTO_INCREMENT PRIMARY KEY, " +
+                "CREATE TABLE IF NOT EXISTS player (" +
+                "player_id INT AUTO_INCREMENT PRIMARY KEY, " +
                 "nickname VARCHAR(50) NOT NULL, " +
                 "score INT NOT NULL, " +
                 "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
