@@ -214,13 +214,16 @@ public class Board extends JPanel {
         int boardPixelWidth = cellW * BoardWidth;
 
         int offsetX = (size.width - boardPixelWidth) / 2;
-        // offsetX = Math.max(offsetX, 5); // kurangi gap kanan kiri agar tidak terlalu besar
+    
         int offsetY = hudSpace;
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, size.width, size.height);
 
-        // Draw stored grid
+        g.setColor(Color.GRAY);
+        g.drawRect(offsetX - 1, offsetY - 1, cellW * BoardWidth + 2, cellH * BoardHeight + 2);
+        g.drawRect(offsetX - 2, offsetY - 2, cellW * BoardWidth + 4, cellH * BoardHeight + 4);
+
         for (int r = 0; r < BoardHeight; r++) {
             for (int c = 0; c < BoardWidth; c++) {
                 Color col = grid[r][c];
@@ -247,7 +250,6 @@ public class Board extends JPanel {
         if (currentPiece != null && !isGameOver)
             currentPiece.draw(g, offsetX, offsetY, cellW, cellH);
 
-        // ---- HUD TEXT ----
         g.setColor(Color.WHITE);
         g.setFont(new Font("Segoe UI", Font.BOLD, 16));
         g.drawString("Player: " + username, 10, 20);

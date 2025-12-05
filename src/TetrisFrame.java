@@ -16,6 +16,7 @@ public class TetrisFrame extends JFrame {
 
         setTitle("Tetris Game");
         setSize(380, 550);
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
