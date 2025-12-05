@@ -32,7 +32,7 @@ public class KoneksiDatabase {
     }
 
     public static boolean saveScore(String nickname, int score) {
-        String sql = "INSERT INTO scores(nickname, score) VALUES(?, ?)";
+        String sql = "INSERT INTO player(nickname, score) VALUES(?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nickname);
             stmt.setInt(2, score);
@@ -45,7 +45,7 @@ public class KoneksiDatabase {
 
     public static List<Object[]> getTopTen() {
         List<Object[]> list = new ArrayList<>();
-        String sql = "SELECT nickname, score, created_at FROM scores ORDER BY score DESC LIMIT 10";
+        String sql = "SELECT nickname, score, created_at FROM player ORDER BY score DESC LIMIT 10";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
