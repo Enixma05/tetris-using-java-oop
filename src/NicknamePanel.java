@@ -34,7 +34,7 @@ public class NicknamePanel extends JPanel {
         add(lblNick, gbc);
 
         nickField = new JTextField();
-        nickField.setPreferredSize(new Dimension(200, 40));
+        nickField.setPreferredSize(new Dimension(200, 50));
         nickField.setOpaque(true);
         nickField.setBackground(fieldBG);
         nickField.setForeground(fieldFG);
@@ -42,7 +42,7 @@ public class NicknamePanel extends JPanel {
         nickField.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         nickField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(accent, 2, true),
-                BorderFactory.createEmptyBorder(8, 12, 8, 12)
+                BorderFactory.createEmptyBorder(10, 12, 8, 12)
         ));
         gbc.gridx = 1;
         add(nickField, gbc);
